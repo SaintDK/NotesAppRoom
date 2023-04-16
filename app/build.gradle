@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+    // todo 1# add 'kotlin-kapt' plugin
     id 'kotlin-kapt'
 }
 
@@ -16,6 +18,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //todo 3# specify directory for storing database schemas
+
+        kapt {
+            arguments { arg("room.schemaLocation", "$projectDir/schemas") }
+        }
     }
 
     buildTypes {
@@ -39,9 +47,14 @@ android {
 
 dependencies {
 
+    // todo 2# add Room dependencies
     //Room
-    implementation 'androidx.room:room-ktx:2.5.0'
-    kapt 'androidx.room:room-compiler:2.5.0'
+
+    def room_version = "2.5.0"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation"androidx.room:room-ktx:$room_version" //optional, Coroutines & Flows support
+
 
     //lifecycle
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
